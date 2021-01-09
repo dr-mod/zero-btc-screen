@@ -74,7 +74,8 @@ def main():
 
                 screen_image_rotated = screen_image.rotate(180)
                 epd.displayPartial(epd.getbuffer(screen_image_rotated))
-                epd.display(epd.getbuffer(screen_image_rotated))
+                # TODO: add a way to switch bewen partial and full update
+                # epd.display(epd.getbuffer(screen_image_rotated))
 
                 time.sleep(REFRESH_INTERVAL)
             except HTTPError as e:
