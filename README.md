@@ -15,12 +15,13 @@ Bitcoin stock price for your RPi Zero
 2. Installing dependencies via apt
     ```
     sudo apt update
-    sudo apt install -y libopenjp2-7 libopenjp2-7 libatlas-base-dev
+    sudo apt install -y libtiff5 libopenjp2-7 libopenjp2-7 libatlas-base-dev
     ```
 3. Install eInk display drivers
     ```
+    pip3 install image numpy RPi.GPIO spidev Pillow
     git clone https://github.com/waveshare/e-Paper.git ~/e-Paper
-    pip3 install image numpy ~/e-Paper/RaspberryPi_JetsonNano/python/
+    pip3 install ~/e-Paper/RaspberryPi_JetsonNano/python/
     ```
     for more information refer to: https://www.waveshare.com/wiki/2.13inch_e-Paper_HAT
 4. Download Zero BTC Screen
@@ -28,7 +29,7 @@ Bitcoin stock price for your RPi Zero
     git clone https://github.com/dr-mod/zero-btc-screen.git ~/zero-btc-screen
     ```
 5. Run it 
-    ```
+    ```Pillow
     python3 ~/zero-btc-screen/main.py
     ```
 6. To make it run on startup
