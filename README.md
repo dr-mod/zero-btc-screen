@@ -12,24 +12,28 @@ Bitcoin stock price for your RPi Zero
     ```
     Interfacing Options -> SPI
    ```
-2. Install eInk display drivers
+2. Installing dependencies via apt
     ```
-    git clone https://github.com/waveshare/e-Paper.git
-    cd e-Paper-master/RaspberryPi_JetsonNano/python/
-    pip3 install -e $(pwd)
+    sudo apt update
+    sudo apt install -y libopenjp2-7 libopenjp2-7 libatlas-base-dev
+    ```
+3. Install eInk display drivers
+    ```
+    git clone https://github.com/waveshare/e-Paper.git ~/e-Paper
+    pip3 install image numpy ~/e-Paper/RaspberryPi_JetsonNano/python/
     ```
     for more information refer to: https://www.waveshare.com/wiki/2.13inch_e-Paper_HAT
-3. Download Zero BTC Screen
+4. Download Zero BTC Screen
     ```
     cd ~
     git clone https://github.com/dr-mod/zero-btc-screen.git
     ```
-4. Run it 
+5. Run it 
     ```
     cd zero-btc-screen
     python3 main.py
     ```
-5. To make it run on startup
+6. To make it run on startup
     1. `nano /etc/rc.local` 
     2. Add one the following before `exit 0`
     ```
