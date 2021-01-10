@@ -25,13 +25,11 @@ Bitcoin stock price for your RPi Zero
     for more information refer to: https://www.waveshare.com/wiki/2.13inch_e-Paper_HAT
 4. Download Zero BTC Screen
     ```
-    cd ~
-    git clone https://github.com/dr-mod/zero-btc-screen.git
+    git clone https://github.com/dr-mod/zero-btc-screen.git ~/zero-btc-screen
     ```
 5. Run it 
     ```
-    cd zero-btc-screen
-    python3 main.py
+    python3 ~/zero-btc-screen/main.py
     ```
 6. To make it run on startup
     1. `nano /etc/rc.local` 
