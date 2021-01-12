@@ -12,14 +12,14 @@ Bitcoin stock price for your RPi Zero
     ```
     Interfacing Options -> SPI
    ```
-2. Installing dependencies via apt
+2. Installing dependencies
     ```
     sudo apt update
-    sudo apt install -y libtiff5 libopenjp2-7 libopenjp2-7 libatlas-base-dev
+    sudo apt-get install python3-pip python3-pil python3-numpy
+    pip3 install RPi.GPIO spidev
     ```
 3. Install eInk display drivers
     ```
-    pip3 install image numpy RPi.GPIO spidev Pillow
     git clone https://github.com/waveshare/e-Paper.git ~/e-Paper
     pip3 install ~/e-Paper/RaspberryPi_JetsonNano/python/
     ```
@@ -29,8 +29,9 @@ Bitcoin stock price for your RPi Zero
     git clone https://github.com/dr-mod/zero-btc-screen.git ~/zero-btc-screen
     ```
 5. Run it 
-    ```Pillow
-    python3 ~/zero-btc-screen/main.py
+    ```
+    cd ~/zero-btc-screen/main.py
+    python3 main.py
     ```
 6. To make it run on startup
     1. `nano /etc/rc.local` 
