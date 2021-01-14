@@ -1,7 +1,9 @@
-from waveshare_epd import epd2in13_V2
-from PIL import Image, ImageDraw, ImageFont
-from display.observer import Observer
 import os
+
+from PIL import Image, ImageDraw, ImageFont
+from waveshare_epd import epd2in13_V2
+
+from display.observer import Observer
 
 SCREEN_HEIGHT = epd2in13_V2.EPD_WIDTH  # 122
 SCREEN_WIDTH = epd2in13_V2.EPD_HEIGHT  # 250
@@ -13,10 +15,9 @@ FONT_LARGE = ImageFont.truetype(os.path.join(os.path.dirname(__file__), 'Font.tt
 class Epd2in13V2(Observer):
 
     def __init__(self, observable):
-        Observer.__init__(self, observable)
+        super().__init__(observable=observable)
         self.epd = epd2in13_V2.EPD()
         self.screen_image, self.screen_draw = self._init_display(self.epd)
-
 
     @staticmethod
     def _init_display(epd):
@@ -29,7 +30,8 @@ class Epd2in13V2(Observer):
         return screen_image, screen_draw
 
     # TODO: Plot generation should be externalised
-    def generate_plot_data(self, plot, width=200, height=100, displacement=(0, 0)):
+    @staticmethod
+    def generate_plot_data(plot, width=200, height=100, displacement=(0, 0)):
         plot_data = []
         for i, element in enumerate(plot):
             x = i * (width / len(plot)) + displacement[0]
@@ -65,5 +67,6 @@ class Epd2in13V2(Observer):
         # epd.display(epd.getbuffer(screen_image_rotated))
         self.epd.displayPartial(self.epd.getbuffer(screen_image_rotated))
 
-    def close(self):
+    @staticmethod
+    def close():
         epd2in13_V2.epdconfig.module_exit()

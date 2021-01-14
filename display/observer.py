@@ -17,3 +17,6 @@ class Observable:
         for observer in self._observers:
             observer.update(data)
 
+    def close(self):
+        for observer in self._observers:
+            observer.close()
