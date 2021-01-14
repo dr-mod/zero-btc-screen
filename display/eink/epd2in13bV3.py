@@ -3,6 +3,7 @@ import os
 from PIL import Image, ImageDraw, ImageFont
 from waveshare_epd import epd2in13b_V3
 
+from data.plot import Plot
 from display.observer import Observer
 
 SCREEN_HEIGHT = epd2in13b_V3.EPD_WIDTH  # 104
@@ -11,9 +12,9 @@ SCREEN_WIDTH = epd2in13b_V3.EPD_HEIGHT  # 212
 FONT_SMALL_SIZE = 12
 FONT_LARGE_SIZE = 24
 FONT_SMALL = ImageFont.truetype(
-    os.path.join(os.path.dirname(__file__), 'Font.ttc'), FONT_SMALL_SIZE)
+    os.path.join(os.path.dirname(__file__), '../Font.ttc'), FONT_SMALL_SIZE)
 FONT_LARGE = ImageFont.truetype(
-    os.path.join(os.path.dirname(__file__), 'Font.ttc'), FONT_LARGE_SIZE)
+    os.path.join(os.path.dirname(__file__), '../Font.ttc'), FONT_LARGE_SIZE)
 
 
 class Epd2in13bV3(Observer):
@@ -29,32 +30,17 @@ class Epd2in13bV3(Observer):
         self.draw_black = ImageDraw.Draw(self.image_black)
         self.draw_ry = ImageDraw.Draw(self.image_ry)
 
-    @staticmethod
-    def generate_plot_data(plot, width=200, height=100, displacement=(0, 0)):
-        plot_data = []
-        for i, element in enumerate(plot):
-            x = i * (width / len(plot)) + displacement[0]
-            y = height - (element * height) + displacement[1]
-            plot_data.append((x, y))
-        return plot_data
-
     def form_image(self, data):
         # self.draw_black.rectangle((0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), fill="#ffffff")
         max_price = max(data)
         min_price = min(data)
         middle_price = (max_price - min_price) / 2 + min_price
-        normalised_data = [(price - min_price) / (max_price - min_price) for price in data]
 
         _x_delta = 10
         _y_delta = 4
         _y_horizontal_line = SCREEN_HEIGHT - FONT_LARGE_SIZE
 
-        graph_plot = self.generate_plot_data(
-            normalised_data,
-            width=SCREEN_WIDTH - 45,
-            height=_y_horizontal_line - _y_delta,
-            displacement=(45, 0))
-        self.draw_black.line(graph_plot)
+        Plot.line(data, size=(SCREEN_WIDTH - 45, _y_horizontal_line - _y_delta), position=(45, 0), draw=self.draw_black)
 
         self.draw_black.text((0, -3), "%d" % max_price, font=FONT_SMALL)
         self.draw_black.text((0, (_y_horizontal_line - FONT_SMALL_SIZE) / 2 - _y_delta),
