@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 from waveshare_epd import epd2in13_V2
 
 from data.plot import Plot
-from display.observer import Observer
+from presentation.observer import Observer
 
 SCREEN_HEIGHT = epd2in13_V2.EPD_WIDTH  # 122
 SCREEN_WIDTH = epd2in13_V2.EPD_HEIGHT  # 250
@@ -13,9 +13,9 @@ FONT_SMALL = ImageFont.truetype(os.path.join(os.path.dirname(__file__), '../Font
 FONT_LARGE = ImageFont.truetype(os.path.join(os.path.dirname(__file__), '../Font.ttc'), 24)
 
 
-class Epd2in13V2(Observer):
+class Epd2in13v2(Observer):
 
-    def __init__(self, observable):
+    def __init__(self, observable, mode):
         super().__init__(observable=observable)
         self.epd = epd2in13_V2.EPD()
         self.screen_image = self._init_display(self.epd)
@@ -51,7 +51,7 @@ class Epd2in13V2(Observer):
         self.form_image(data, ImageDraw.Draw(self.screen_image))
         screen_image_rotated = self.screen_image.rotate(180)
         # TODO: add a way to switch bewen partial and full update
-        # epd.display(epd.getbuffer(screen_image_rotated))
+        # epd.presentation(epd.getbuffer(screen_image_rotated))
         self.epd.displayPartial(self.epd.getbuffer(screen_image_rotated))
 
     @staticmethod

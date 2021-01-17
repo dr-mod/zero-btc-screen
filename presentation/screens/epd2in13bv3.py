@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 from waveshare_epd import epd2in13b_V3
 
 from data.plot import Plot
-from display.observer import Observer
+from presentation.observer import Observer
 
 SCREEN_HEIGHT = epd2in13b_V3.EPD_WIDTH  # 104
 SCREEN_WIDTH = epd2in13b_V3.EPD_HEIGHT  # 212

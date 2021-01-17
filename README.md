@@ -5,7 +5,7 @@ Bitcoin stock price for your RPi Zero
 
 ## Hardware
 * Raspberry Pi Zero W (or any other RPi)
-* Waveshare 2.13" eInk display (supports multiple versions)
+* Waveshare eInk display (supports multiple versions)
 
 ## Installation
 1. Turn on SPI via `sudo raspi-config`
@@ -40,14 +40,29 @@ Bitcoin stock price for your RPi Zero
     su - pi -c "/usr/bin/screen -dm sh -c 'cd /home/pi/zero-btc-screen/ && /usr/bin/python3 /home/pi/zero-btc-screen/main.py'"
     ```
 
-## eInk multiple versions
+## Screen configuration
 
-The application supports multiple Waveshare displays.
-A required display could be configured through an environment `BTC_SCREEN_DRIVER`
+The application supports multiple e-ink displays and some other.
 
-A value has to be the exact *epd...* name which can found here: 
-https://github.com/waveshare/e-Paper/tree/master/RaspberryPi_JetsonNano/python/lib/waveshare_epd
-
-There is implemented support for:
-* epd2in13_V2 (default)
-* epd2in13b_V3
+To configure what display(s) to use configuration.json should be modified.
+In the following example an e-ink and a virtual "picture" screen is select:
+```json
+{
+  "screens": [
+    {
+      "epd2in13v2": {
+        "mode": "line"
+      }
+    },
+    {
+      "picture": {
+        "filename": "/home/pi/output.png"
+      }
+    }
+  ]
+}
+```
+The following screens are supported:
+* epd2in13v2
+* epd2in13bv3
+* picture

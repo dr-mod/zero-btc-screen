@@ -1,0 +1,14 @@
+{
+  "screens": [
+    {
+      "epd2in13V2": {
+        "mode": "line"
+      }
+    },
+    {
+      "picture": {
+        "filename": "/home/pi/output.png"
+      }
+    }
+  ]
+}

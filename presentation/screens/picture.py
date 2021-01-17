@@ -3,7 +3,7 @@ import os
 from PIL import Image, ImageDraw, ImageFont
 
 from data.plot import Plot
-from display.observer import Observer
+from presentation.observer import Observer
 
 SCREEN_HEIGHT = 122
 SCREEN_WIDTH = 250
@@ -12,7 +12,7 @@ FONT_SMALL = ImageFont.truetype(os.path.join(os.path.dirname(__file__), '../Font
 FONT_LARGE = ImageFont.truetype(os.path.join(os.path.dirname(__file__), '../Font.ttc'), 24)
 
 
-class ImageScreen(Observer):
+class Picture(Observer):
 
     def __init__(self, observable, filename):
         super().__init__(observable=observable)
@@ -39,5 +39,8 @@ class ImageScreen(Observer):
         image = Image.new('1', (SCREEN_WIDTH, SCREEN_HEIGHT), 255)
         self.form_image(data, ImageDraw.Draw(image))
         image.save(self.filename)
+
+    def close(self):
+        pass
 
 
