@@ -41,22 +41,12 @@ class Epd2in13bV3(Observer):
         _y_horizontal_line = SCREEN_HEIGHT - FONT_LARGE_SIZE
 
         Plot.line(data, size=(SCREEN_WIDTH - 45, _y_horizontal_line - _y_delta), position=(45, 0), draw=self.draw_black)
-
-        self.draw_black.text((0, -3), "%d" % max_price, font=FONT_SMALL)
-        self.draw_black.text((0, (_y_horizontal_line - FONT_SMALL_SIZE) / 2 - _y_delta),
-                             "%d" % middle_price, font=FONT_SMALL)
-        self.draw_black.text((0, _y_horizontal_line - FONT_SMALL_SIZE - _y_delta),
-                             "%d" % min_price, font=FONT_SMALL)
+        Plot.y_axis_labels(data, FONT_SMALL, (0, -3), (0, _y_horizontal_line - FONT_SMALL_SIZE - _y_delta), draw=self.draw_black)
         self.draw_black.line([(_x_delta, _y_horizontal_line),
                               (SCREEN_WIDTH - _x_delta, _y_horizontal_line)])
         # TODO: calculate 39 from max of (max, middle, min prices)
         self.draw_black.line([(39, _y_delta), (39, _y_horizontal_line - _y_delta)])
-
-        current_price = data[len(data) - 1]
-        price_text = "BTC = %.2f" % current_price
-        text_width, _ = self.draw_black.textsize(price_text, FONT_LARGE)
-        price_position = ((SCREEN_WIDTH - text_width) / 2, SCREEN_HEIGHT - FONT_LARGE_SIZE)
-        self.draw_black.text(price_position, price_text, font=FONT_LARGE)
+        Plot.caption(data[len(data) - 1], SCREEN_HEIGHT - FONT_LARGE_SIZE, SCREEN_WIDTH, FONT_LARGE, self.draw_black)
 
     def update(self, data):
         self.form_image(data)
