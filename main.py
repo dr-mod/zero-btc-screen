@@ -1,6 +1,6 @@
 import json
 import time
-import urllib
+import urllib.request
 from datetime import datetime, timezone, timedelta
 from urllib.error import HTTPError
 from config.builder import Builder
