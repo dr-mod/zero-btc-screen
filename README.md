@@ -30,7 +30,7 @@ Bitcoin stock price for your RPi Zero
     python3 main.py
     ```
 5. To make it run on startup
-    1. `nano /etc/rc.local` 
+    1. `sudo nano /etc/rc.local` 
     2. Add one the following before `exit 0`
     ```
     /usr/bin/python3 /home/pi/zero-btc-screen/main.py&
