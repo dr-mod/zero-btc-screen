@@ -1,13 +1,16 @@
-from config.json_config import JsonConfig
+from config.config import Config
+from logs import logger
 from presentation import screens
 
 
 class Builder:
-    def __init__(self, config: JsonConfig):
+    def __init__(self, config: Config):
+        logger.info('building up')
         self.config = config
 
     def bind(self, observable):
-        for screen, parameters in self.config.screens().items():
+        for screen, parameters in self.config.screens.items():
+            logger.info(f'binding {screen}')
             try:
                 kwargs = {}
                 package = getattr(screens, screen.lower())
@@ -18,7 +21,9 @@ class Builder:
                     if screen_config_value is not None:
                         kwargs[argument] = screen_config_value
                 screen_class(observable=observable, **kwargs)
-            except AttributeError:
+                logger.info(f'{screen} initialized')
+            except AttributeError as e:
+                logger.error(str(e))
                 raise BtcConfigError(
                     f'Cannot instantiate {screen}')
 

@@ -44,23 +44,36 @@ Bitcoin stock price for your RPi Zero
 
 The application supports multiple e-ink displays and some other.
 
-To configure what display(s) to use configuration.json should be modified.
+To configure what display(s) to use configuration.cfg should be modified.
 In the following example an e-ink and a virtual "picture" screen is select:
-```json
-{
-  "screens": [
-    {
-      "epd2in13v2": {
-        "mode": "line"
-      }
-    },
-    {
-      "picture": {
-        "filename": "/home/pi/output.png"
-      }
-    }
+```cfg
+[base]
+# turns off / on logging
+logging                  : true
+# turns off / on logging into "log.txt"
+log_file                 : false
+# use real or fake random data
+dummy_data               : true
+refresh_interval_minutes : 15
+# define desired screens
+# uncomment / comment
+screens : [
+    epd2in13v2
+    picture
+;    epd2in13bv3
   ]
-}
+
+# Each screen has its own configuration section
+
+[epd2in13v2]
+mode : line
+
+[epd2in13bv3]
+mode  : line
+theme : default
+
+[picture]
+filename : /home/pi/output.png
 ```
 The following screens are supported:
 * epd2in13v2

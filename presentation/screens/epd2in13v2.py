@@ -9,13 +9,15 @@ from presentation.observer import Observer
 SCREEN_HEIGHT = epd2in13_V2.EPD_WIDTH  # 122
 SCREEN_WIDTH = epd2in13_V2.EPD_HEIGHT  # 250
 
-FONT_SMALL = ImageFont.truetype(os.path.join(os.path.dirname(__file__), '../Font.ttc'), 13)
-FONT_LARGE = ImageFont.truetype(os.path.join(os.path.dirname(__file__), '../Font.ttc'), 24)
+FONT_SMALL = ImageFont.truetype(
+    os.path.join(os.path.dirname(__file__), os.pardir, 'Font.ttc'), 13)
+FONT_LARGE = ImageFont.truetype(
+    os.path.join(os.path.dirname(__file__), os.pardir, 'Font.ttc'), 24)
 
 
 class Epd2in13v2(Observer):
 
-    def __init__(self, observable, mode):
+    def __init__(self, observable, **kwargs):
         super().__init__(observable=observable)
         self.epd = epd2in13_V2.EPD()
         self.screen_image = self._init_display(self.epd)

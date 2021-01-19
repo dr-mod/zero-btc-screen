@@ -8,15 +8,17 @@ from presentation.observer import Observer
 SCREEN_HEIGHT = 122
 SCREEN_WIDTH = 250
 
-FONT_SMALL = ImageFont.truetype(os.path.join(os.path.dirname(__file__), '../Font.ttc'), 13)
-FONT_LARGE = ImageFont.truetype(os.path.join(os.path.dirname(__file__), '../Font.ttc'), 24)
+FONT_SMALL = ImageFont.truetype(
+    os.path.join(os.path.dirname(__file__), os.pardir, 'Font.ttc'), 13)
+FONT_LARGE = ImageFont.truetype(
+    os.path.join(os.path.dirname(__file__), os.pardir, 'Font.ttc'), 24)
 
 
 class Picture(Observer):
 
-    def __init__(self, observable, filename):
+    def __init__(self, observable, **kwargs):
         super().__init__(observable=observable)
-        self.filename = filename
+        self.filename = kwargs['filename']
 
     def form_image(self, prices, screen_draw):
         Plot.line(prices, size=(SCREEN_WIDTH - 45, 93), position=(45, 0), draw=screen_draw)
