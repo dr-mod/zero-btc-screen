@@ -11,15 +11,15 @@ class Config:
 
     @property
     def logging(self):
-        return self._conf.get('base', 'logging', fallback=True)
+        return self._conf.getboolean('base', 'logging', fallback=True)
 
     @property
     def log_file(self):
-        return self._conf.get('base', 'log_file', fallback=False)
+        return self._conf.getboolean('base', 'log_file', fallback=False)
 
     @property
     def dummy_data(self):
-        return self._conf.get('base', 'dummy_data', fallback=False)
+        return self._conf.getboolean('base', 'dummy_data', fallback=False)
 
     @property
     def screens(self):
@@ -31,7 +31,7 @@ class Config:
 
     @property
     def refresh_interval(self):
-        return self._conf.get('base', 'refresh_interval_minutes', fallback=15) * 60
+        return self._conf.getint('base', 'refresh_interval_minutes', fallback=15) * 60
 
     @staticmethod
     def _load_screens(file_name):
