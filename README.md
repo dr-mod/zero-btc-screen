@@ -11,23 +11,23 @@ Bitcoin stock price for your RPi Zero
 1. Turn on SPI via `sudo raspi-config`
     ```
     Interfacing Options -> SPI
+   ```
+2. Install eInk display drivers and dependencies
     ```
-2. Install eInk display drivers
-    ```
-    git clone https://github.com/waveshare/e-Paper.git
-    cd e-Paper/RaspberryPi_JetsonNano/python/
-    pip3 install $(pwd)
+    sudo apt update
+    sudo apt-get install python3-pip python3-pil python3-numpy
+    pip3 install RPi.GPIO spidev
+    git clone https://github.com/waveshare/e-Paper.git ~/e-Paper
+    pip3 install ~/e-Paper/RaspberryPi_JetsonNano/python/
     ```
     for more information refer to: https://www.waveshare.com/wiki/2.13inch_e-Paper_HAT
 3. Download Zero BTC Screen
     ```
-    cd ~
-    git clone https://github.com/dr-mod/zero-btc-screen.git
+    git clone https://github.com/dr-mod/zero-btc-screen.git ~/zero-btc-screen
     ```
 4. Run it 
     ```
-    cd zero-btc-screen
-    python3 main.py
+    python3 ~/zero-btc-screen/main.py
     ```
 5. To make it run on startup
     1. `sudo nano /etc/rc.local` 
@@ -37,40 +37,36 @@ Bitcoin stock price for your RPi Zero
     ```
     conversely, you can run in `screen`
     ```
-    su - pi -c "/usr/bin/screen -dm sh -c 'cd /home/pi/zero-btc-screen/ && /usr/bin/python3 /home/pi/zero-btc-screen/main.py'"
+    su - pi -c "/usr/bin/screen -dm sh -c '/usr/bin/python3 /home/pi/zero-btc-screen/main.py'"
     ```
 
 ## Screen configuration
 
-The application supports multiple e-ink displays and some other.
+The application supports multiple types of e-ink screens, and an additional "picture" screen.
 
-To configure what display(s) to use configuration.cfg should be modified.
-In the following example an e-ink and a virtual "picture" screen is select:
+To configure which display(s) to use, configuration.cfg should be modified.
+In the following example an e-ink epd2in13v2 and "picture" screens are select:
 ```cfg
 [base]
-# turns off / on logging
-logging                  : true
-# turns off / on logging into "log.txt"
-log_file                 : false
-# use real or fake random data
-dummy_data               : true
+console_logs             : false
+#logs_file                : /tmp/zero-btc-screen.log
+dummy_data               : false
 refresh_interval_minutes : 15
-# define desired screens
-# uncomment / comment
+
+# Enabled screens or devices
 screens : [
     epd2in13v2
+#    epd2in13bv3
     picture
-;    epd2in13bv3
   ]
 
-# Each screen has its own configuration section
-
+# Configuration per screen
+# This doesn't make any effect if screens are not enabled above
 [epd2in13v2]
 mode : line
 
 [epd2in13bv3]
 mode  : line
-theme : default
 
 [picture]
 filename : /home/pi/output.png
