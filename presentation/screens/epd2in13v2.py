@@ -17,7 +17,7 @@ FONT_LARGE = ImageFont.truetype(
 
 class Epd2in13v2(Observer):
 
-    def __init__(self, observable, **kwargs):
+    def __init__(self, observable, mode):
         super().__init__(observable=observable)
         self.epd = epd2in13_V2.EPD()
         self.screen_image = self._init_display(self.epd)

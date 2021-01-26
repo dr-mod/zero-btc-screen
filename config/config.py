@@ -5,17 +5,16 @@ __all__ = ('config', 'Config')
 
 
 class Config:
-    def __init__(self, file_name=os.path.join(os.path.dirname(__file__),
-                                              '../configuration.cfg')):
+    def __init__(self, file_name=os.path.join(os.path.dirname(__file__), os.pardir, 'configuration.cfg')):
         self._conf = self._load_screens(file_name)
 
     @property
-    def logging(self):
-        return self._conf.getboolean('base', 'logging', fallback=True)
+    def console_logs(self):
+        return self._conf.getboolean('base', 'console_logs', fallback=False)
 
     @property
-    def log_file(self):
-        return self._conf.getboolean('base', 'log_file', fallback=False)
+    def logs_file(self):
+        return self._conf.get('base', 'logs_file', fallback=None)
 
     @property
     def dummy_data(self):

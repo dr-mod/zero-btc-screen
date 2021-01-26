@@ -19,7 +19,7 @@ FONT_LARGE = ImageFont.truetype(
 
 class Epd2in13bv3(Observer):
 
-    def __init__(self, observable, **kwargs):
+    def __init__(self, observable, mode):
         super().__init__(observable=observable)
         self.epd = epd2in13b_V3.EPD()
 
@@ -85,7 +85,6 @@ class Epd2in13bv3(Observer):
             self.epd.getbuffer(image_black_rotated),
             self.epd.getbuffer(image_ry_rotated)
         )
-        # self.epd.sleep()
 
     def close(self):
         self.epd.Dev_exit()

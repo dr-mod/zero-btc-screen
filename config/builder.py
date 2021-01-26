@@ -5,12 +5,12 @@ from presentation import screens
 
 class Builder:
     def __init__(self, config: Config):
-        logger.info('building up')
+        logger.info('Building up')
         self.config = config
 
     def bind(self, observable):
         for screen, parameters in self.config.screens.items():
-            logger.info(f'binding {screen}')
+            logger.info(f'Binding {screen}')
             try:
                 kwargs = {}
                 package = getattr(screens, screen.lower())

@@ -2,7 +2,7 @@ import json
 import random
 import time
 from datetime import datetime, timezone, timedelta
-from urllib.error import HTTPError
+from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 from config.builder import Builder
@@ -16,12 +16,13 @@ API_URL = 'https://production.api.coindesk.com/v2/price/values/BTC?ohlc=false'
 
 
 def get_dummy_data():
-    logger.info('getting dummy data')
-    return [random.randint(9999, 1000000) for _ in range(0, 97)]
+    logger.info('Generating dummy data')
+    random.seed(1)
+    return [random.randint(9999, 99000) for _ in range(0, 97)]
 
 
 def fetch_prices():
-    logger.info('fetching prices')
+    logger.info('Fetching prices')
     timeslot_end = datetime.now(timezone.utc)
     end_date = timeslot_end.strftime(DATETIME_FORMAT)
     start_data = (timeslot_end - timedelta(days=DATA_SLICE_DAYS)).strftime(DATETIME_FORMAT)
@@ -34,7 +35,7 @@ def fetch_prices():
 
 
 def main():
-    logger.info('initialize')
+    logger.info('Initialize')
 
     data_sink = Observable()
     builder = Builder(config)
@@ -46,13 +47,13 @@ def main():
                 prices = get_dummy_data() if config.dummy_data else fetch_prices()
                 data_sink.update_observers(prices)
                 time.sleep(config.refresh_interval)
-            except HTTPError as e:
+            except (HTTPError, URLError) as e:
                 logger.error(str(e))
                 time.sleep(5)
     except IOError as e:
         logger.error(str(e))
     except KeyboardInterrupt:
-        logger.info('exit')
+        logger.info('Exit')
         data_sink.close()
         exit()
 

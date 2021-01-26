@@ -16,9 +16,9 @@ FONT_LARGE = ImageFont.truetype(
 
 class Picture(Observer):
 
-    def __init__(self, observable, **kwargs):
+    def __init__(self, observable, filename):
         super().__init__(observable=observable)
-        self.filename = kwargs['filename']
+        self.filename = filename
 
     def form_image(self, prices, screen_draw):
         Plot.line(prices, size=(SCREEN_WIDTH - 45, 93), position=(45, 0), draw=screen_draw)
