@@ -12,13 +12,12 @@ from presentation.observer import Observable
 
 DATA_SLICE_DAYS = 1
 DATETIME_FORMAT = "%Y-%m-%dT%H:%M"
-API_URL = 'https://production.api.coindesk.com/v2/price/values/BTC?ohlc=false'
+API_URL = 'https://production.api.coindesk.com/v2/price/values/BTC?ohlc=true'
 
 
 def get_dummy_data():
     logger.info('Generating dummy data')
-    random.seed(1)
-    return [random.randint(9999, 99000) for _ in range(0, 97)]
+
 
 
 def fetch_prices():
@@ -30,7 +29,7 @@ def fetch_prices():
     req = Request(url)
     data = urlopen(req).read()
     external_data = json.loads(data)
-    prices = [entry[1] for entry in external_data['data']['entries']]
+    prices = [entry[1:] for entry in external_data['data']['entries']]
     return prices
 
 
@@ -44,7 +43,7 @@ def main():
     try:
         while True:
             try:
-                prices = get_dummy_data() if config.dummy_data else fetch_prices()
+                prices = [entry[1:] for entry in get_dummy_data()] if config.dummy_data else fetch_prices()
                 data_sink.update_observers(prices)
                 time.sleep(config.refresh_interval)
             except (HTTPError, URLError) as e:

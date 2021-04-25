@@ -1,7 +1,8 @@
 # Zero BTC Screen
 Bitcoin stock price for your RPi Zero
 
-![display](display.jpg)
+![display](display_1.jpeg)
+![display](display_2.jpeg)
 
 ## Hardware
 * Raspberry Pi Zero W (or any other RPi)
