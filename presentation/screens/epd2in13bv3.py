@@ -1,12 +1,18 @@
-from PIL import Image, ImageDraw
+import os
+
+from PIL import Image, ImageDraw, ImageFont
 from waveshare_epd import epd2in13b_V3
 
+from data.plot import Plot
 from presentation.observer import Observer
-from presentation.screens.layouts.default import Default
 
 SCREEN_HEIGHT = epd2in13b_V3.EPD_WIDTH  # 104
 SCREEN_WIDTH = epd2in13b_V3.EPD_HEIGHT  # 212
 
+FONT_SMALL = ImageFont.truetype(
+    os.path.join(os.path.dirname(__file__), os.pardir, 'Roses.ttf'), 7)
+FONT_LARGE = ImageFont.truetype(
+    os.path.join(os.path.dirname(__file__), os.pardir, 'PixelSplitter-Bold.ttf'), 22)
 
 class Epd2in13bv3(Observer):
 
@@ -19,11 +25,23 @@ class Epd2in13bv3(Observer):
         self.image_ry = Image.new('1', (SCREEN_WIDTH, SCREEN_HEIGHT), 255)
         self.draw_black = ImageDraw.Draw(self.image_black)
         self.draw_ry = ImageDraw.Draw(self.image_ry)
-        self.layout = Default(SCREEN_WIDTH, mode)
+        self.mode = mode
 
     def form_image(self, prices):
         self.draw_black.rectangle((0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), fill="white")
-        self.layout.form_image(self.draw_black, prices)
+        screen_draw = self.draw_black
+        if self.mode == "candle":
+            Plot.candle(prices, size=(SCREEN_WIDTH - 38, 79), position=(35, 0), draw=screen_draw)
+        else:
+            last_prices = [x[3] for x in prices]
+            Plot.line(last_prices, size=(SCREEN_WIDTH - 36, 79), position=(36, 0), draw=screen_draw)
+
+        flatten_prices = [item for sublist in prices for item in sublist]
+        Plot.y_axis_labels(flatten_prices, FONT_SMALL, (0, 0), (32, 76), draw=screen_draw)
+        screen_draw.line([(9, 83), (204, 83)])
+        screen_draw.line([(33, 3), (33, 80)])
+        screen_draw.line([(51, 87), (51, 101)])
+        Plot.caption(flatten_prices[len(flatten_prices) - 1], 81, SCREEN_WIDTH, FONT_LARGE, screen_draw)
 
     def update(self, data):
         self.form_image(data)

@@ -97,7 +97,8 @@ class Plot:
             close_y = math.floor(y_flip(close))
             if open_y == close_y:
                 draw.line([x, open_y, x + candle_width - 1, close_y])
-            elif open_y < close_y:
-                draw.rectangle([x, open_y, x + candle_width - 1, close_y])
             else:
-                draw.rectangle([x, open_y, x + candle_width - 1, close_y], fill="#000000")
+                if open < close:
+                    draw.rectangle([x, open_y, x + candle_width - 1, close_y])
+                else:
+                    draw.rectangle([x, open_y, x + candle_width - 1, close_y], fill="#000000")
