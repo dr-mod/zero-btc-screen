@@ -38,12 +38,12 @@ class Plot:
         draw.text((center_x(price), position_last[1]), price, font=font, fill=fill)
 
     @staticmethod
-    def caption(price, x, y, screen_width, font, draw):
-        draw.text((x, y), "BTC", font=font)
+    def caption(price, x, y, screen_width, font, draw, fill=None):
+        draw.text((x, y), "BTC", font=font, fill=fill)
         price_text = "%.2f" % price
         text_width, _ = draw.textsize(price_text, font)
         price_position = (((screen_width - text_width - x) / 2) + x, y)
-        draw.text(price_position, price_text, font=font)
+        draw.text(price_position, price_text, font=font, fill=fill)
 
     @staticmethod
     def candle(data, size=(100, 100), position=(0, 0), draw=None, fill_neg=None, fill_pos=None):
