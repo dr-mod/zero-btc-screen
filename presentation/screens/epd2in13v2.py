@@ -46,7 +46,7 @@ class Epd2in13v2(Observer):
         screen_draw.line([(10, 98), (240, 98)])
         screen_draw.line([(39, 4), (39, 94)])
         screen_draw.line([(60, 102), (60, 119)])
-        Plot.caption(flatten_prices[len(flatten_prices) - 1], 95, SCREEN_WIDTH, FONT_LARGE, screen_draw)
+        Plot.caption(flatten_prices[len(flatten_prices) - 1], 60, 95, SCREEN_WIDTH, FONT_LARGE, screen_draw)
 
     def update(self, data):
         self.form_image(data, self.screen_draw)
