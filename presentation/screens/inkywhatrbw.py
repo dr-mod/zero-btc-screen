@@ -31,6 +31,7 @@ class Inkywhatrbw(Observer):
 
     def form_image(self, prices):
         screen_draw = ImageDraw.Draw(self.image)
+        screen_draw.rectangle([0,0,SCREEN_WIDTH,SCREEN_HEIGHT],fill=inky_display.WHITE)
         if self.mode == "candle":
             Plot.candle(prices, size=(SCREEN_WIDTH - LEFT_MARGIN, SCREEN_HEIGHT - BOTTOM_MARGIN), position=(LEFT_MARGIN, 0), draw=screen_draw, fill_neg=inky_display.RED, fill_pos=inky_display.BLACK)
         else:
