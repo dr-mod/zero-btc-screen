@@ -42,7 +42,7 @@ class Inkywhatrbw(Observer):
         screen_draw.line([(0, SCREEN_HEIGHT - BOTTOM_MARGIN), (SCREEN_WIDTH, SCREEN_HEIGHT - BOTTOM_MARGIN)], fill=inky_display.BLACK)
         screen_draw.line([(LEFT_MARGIN, 0), (LEFT_MARGIN, SCREEN_HEIGHT - BOTTOM_MARGIN)], fill=inky_display.BLACK)
         #screen_draw.line([(LEFT_MARGIN * 4, SCREEN_HEIGHT - BOTTOM_MARGIN), (LEFT_MARGIN * 4, SCREEN_HEIGHT)], fill=inky_display.BLACK)
-        Plot.caption(flatten_prices[len(flatten_prices) - 1], LEFT_MARGIN,  SCREEN_HEIGHT - BOTTOM_MARGIN, SCREEN_WIDTH, FONT_LARGE, screen_draw, fill=inky_display.BLACK)
+        Plot.caption(flatten_prices[len(flatten_prices) - 1], LEFT_MARGIN,  SCREEN_HEIGHT - BOTTOM_MARGIN, SCREEN_WIDTH, FONT_LARGE, screen_draw, fill=inky_display.BLACK, LEFT_MARGIN, LEFT_MARGIN)
 
     def update(self, data):
         self.form_image(data)
