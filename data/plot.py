@@ -89,9 +89,9 @@ class Plot:
             x = candle_width * i + space * i + leftover_space / 2 + position[0]
             # high price
             wick_x = x + (candle_width // 2)
-            draw.line([wick_x, y_flip(high), wick_x, y_flip(max(open, close))])
+            draw.line([wick_x, y_flip(high), wick_x, y_flip(max(open, close))], fill=fill_pos)
             # low price
-            draw.line([wick_x, y_flip(low), wick_x, y_flip(min(open, close))])
+            draw.line([wick_x, y_flip(low), wick_x, y_flip(min(open, close))], fill=fill_pos)
 
             open_y = math.floor(y_flip(open))
             close_y = math.floor(y_flip(close))
