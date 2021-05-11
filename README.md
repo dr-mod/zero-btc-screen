@@ -95,6 +95,7 @@ screens : [
     epd2in13v2
 #    epd2in13bv3
     picture
+#    inkyWhatRBW
   ]
 
 # Configuration per screen
@@ -107,8 +108,12 @@ mode  : line
 
 [picture]
 filename : /home/pi/output.png
+
+[inkyWhatRBW]
+mode : candle
 ```
 The following screens are supported:
 * epd2in13v2
 * epd2in13bv3
+* inkyWhat (Red, Black, White)
 * picture
