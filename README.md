@@ -20,6 +20,7 @@ Bitcoin stock price for your RPi Zero
     pip3 install RPi.GPIO spidev
     git clone https://github.com/waveshare/e-Paper.git ~/e-Paper
     pip3 install ~/e-Paper/RaspberryPi_JetsonNano/python/
+    pip3 install inky[rpi]
     ```
     for more information refer to: https://www.waveshare.com/wiki/2.13inch_e-Paper_HAT
 3. Download Zero BTC Screen
