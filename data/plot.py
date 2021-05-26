@@ -39,7 +39,7 @@ class Plot:
 
     @staticmethod
     def caption(price, y, screen_width, font, draw):
-        draw.text((-1, y), config.currency, font=font)
+        draw.text((-1, y), config.currency[:3], font=font)
         price_text = "%.2f" % price
         text_width, _ = draw.textsize(price_text, font)
         price_position = (((screen_width - text_width - 60) / 2) + 60, y)
