@@ -32,6 +32,10 @@ class Config:
     def refresh_interval(self):
         return self._conf.getint('base', 'refresh_interval_minutes', fallback=15) * 60
 
+    @property
+    def currency(self):
+        return self._conf.get('base', 'currency', fallback='BTC')
+
     @staticmethod
     def _load_screens(file_name):
         conf = configparser.ConfigParser()
