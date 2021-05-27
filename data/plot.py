@@ -1,5 +1,5 @@
 import math
-
+from config.config import config
 
 class Plot:
     @staticmethod
@@ -39,7 +39,7 @@ class Plot:
 
     @staticmethod
     def caption(price, y, screen_width, font, draw, fill=None, currency_offset=-1, price_offset=60):
-        draw.text((currency_offset, y), "BTC", font=font, fill=fill)
+        draw.text((currency_offset, y), config.currency[:3], font=font, fill=fill)
         price_text = "%.2f" % price
         text_width, _ = draw.textsize(price_text, font)
         price_position = (((screen_width - text_width - price_offset) / 2) + price_offset, y)
