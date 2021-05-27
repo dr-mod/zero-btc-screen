@@ -1,13 +1,15 @@
 import os
 
 from PIL import Image, ImageDraw, ImageFont
-from waveshare_epd import epd2in13b_V3
-
+try:
+    from waveshare_epd import epd2in13b_V3
+except ImportError:
+    pass
 from data.plot import Plot
 from presentation.observer import Observer
 
-SCREEN_HEIGHT = epd2in13b_V3.EPD_WIDTH  # 104
-SCREEN_WIDTH = epd2in13b_V3.EPD_HEIGHT  # 212
+SCREEN_HEIGHT = 104
+SCREEN_WIDTH = 212
 
 FONT_SMALL = ImageFont.truetype(
     os.path.join(os.path.dirname(__file__), os.pardir, 'Roses.ttf'), 7)
