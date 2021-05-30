@@ -30,17 +30,17 @@ class Plot:
         min_price = min(prices)
         middle_price = (max_price - min_price) / 2 + min_price
 
-        price = "%d" % max_price
+        price = Plot.human_format(max_price, 5)
         draw.text((center_x(price), position_first[1]), price, font=font, fill=fill)
-        price = "%d" % middle_price
+        price = Plot.human_format(middle_price, 5)
         draw.text((center_x(price), (position_last[1] - position_first[1]) / 2 + position_first[1]), price, font=font, fill=fill)
-        price = "%d" % min_price
+        price = Plot.human_format(min_price, 5)
         draw.text((center_x(price), position_last[1]), price, font=font, fill=fill)
 
     @staticmethod
     def caption(price, y, screen_width, font, draw, fill=None, currency_offset=-1, price_offset=60):
         draw.text((currency_offset, y), config.currency[:3], font=font, fill=fill)
-        price_text = "%.2f" % price
+        price_text = Plot.human_format(price, 8, 2)
         text_width, _ = draw.textsize(price_text, font)
         price_position = (((screen_width - text_width - price_offset) / 2) + price_offset, y)
         draw.text(price_position, price_text, font=font, fill=fill)
@@ -102,3 +102,17 @@ class Plot:
                     draw.rectangle([x, open_y, x + candle_width - 1, close_y], fill=fill_pos)
                 else:
                     draw.rectangle([x, open_y, x + candle_width - 1, close_y], fill=fill_neg)
+
+    # TODO: Adapt for big numbers 1k, 1m, etc
+    @staticmethod
+    def human_format(number, length, fractional_minimal=0):
+        magnitude = 0
+        num = number
+        while abs(num) >= 10:
+            magnitude += 1
+            num /= 10.0
+        format_string = f'%.{fractional_minimal}f'
+        if length >= magnitude + fractional_minimal + 2:
+            fractional_length = length - magnitude - 2
+            format_string = f'%.{fractional_length}f'
+        return format_string % number
