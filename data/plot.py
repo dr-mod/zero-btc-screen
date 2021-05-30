@@ -17,7 +17,7 @@ class Plot:
 
     # TODO: Implement variable number of elements to generate
     @staticmethod
-    def y_axis_labels(prices, font, position_first=(0, 0), position_last=(0, 0), draw=None):
+    def y_axis_labels(prices, font, position_first=(0, 0), position_last=(0, 0), draw=None, fill=None):
         def center_x(price):
             area_width = position_last[0] - position_first[0]
             text_width, _ = draw.textsize(price, font)
@@ -31,22 +31,22 @@ class Plot:
         middle_price = (max_price - min_price) / 2 + min_price
 
         price = "%d" % max_price
-        draw.text((center_x(price), position_first[1]), price, font=font)
+        draw.text((center_x(price), position_first[1]), price, font=font, fill=fill)
         price = "%d" % middle_price
-        draw.text((center_x(price), (position_last[1] - position_first[1]) / 2 + position_first[1]), price, font=font)
+        draw.text((center_x(price), (position_last[1] - position_first[1]) / 2 + position_first[1]), price, font=font, fill=fill)
         price = "%d" % min_price
-        draw.text((center_x(price), position_last[1]), price, font=font)
+        draw.text((center_x(price), position_last[1]), price, font=font, fill=fill)
 
     @staticmethod
-    def caption(price, y, screen_width, font, draw):
-        draw.text((-1, y), config.currency[:3], font=font)
+    def caption(price, y, screen_width, font, draw, fill=None, currency_offset=-1, price_offset=60):
+        draw.text((currency_offset, y), config.currency[:3], font=font, fill=fill)
         price_text = "%.2f" % price
         text_width, _ = draw.textsize(price_text, font)
-        price_position = (((screen_width - text_width - 60) / 2) + 60, y)
-        draw.text(price_position, price_text, font=font)
+        price_position = (((screen_width - text_width - price_offset) / 2) + price_offset, y)
+        draw.text(price_position, price_text, font=font, fill=fill)
 
     @staticmethod
-    def candle(data, size=(100, 100), position=(0, 0), draw=None):
+    def candle(data, size=(100, 100), position=(0, 0), draw=None, fill_neg="#000000", fill_pos=None):
         width = size[0]
         height = size[1]
 
@@ -89,16 +89,16 @@ class Plot:
             x = candle_width * i + space * i + leftover_space / 2 + position[0]
             # high price
             wick_x = x + (candle_width // 2)
-            draw.line([wick_x, y_flip(high), wick_x, y_flip(max(open, close))])
+            draw.line([wick_x, y_flip(high), wick_x, y_flip(max(open, close))], fill=fill_pos)
             # low price
-            draw.line([wick_x, y_flip(low), wick_x, y_flip(min(open, close))])
+            draw.line([wick_x, y_flip(low), wick_x, y_flip(min(open, close))], fill=fill_pos)
 
             open_y = math.floor(y_flip(open))
             close_y = math.floor(y_flip(close))
             if open_y == close_y:
-                draw.line([x, open_y, x + candle_width - 1, close_y])
+                draw.line([x, open_y, x + candle_width - 1, close_y], fill=fill_pos)
             else:
                 if open < close:
-                    draw.rectangle([x, open_y, x + candle_width - 1, close_y])
+                    draw.rectangle([x, open_y, x + candle_width - 1, close_y], fill=fill_pos)
                 else:
-                    draw.rectangle([x, open_y, x + candle_width - 1, close_y], fill="#000000")
+                    draw.rectangle([x, open_y, x + candle_width - 1, close_y], fill=fill_neg)
