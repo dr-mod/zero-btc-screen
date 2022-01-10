@@ -26,7 +26,7 @@ Bitcoin (or any other currency) stock price for your RPi Zero
 2. Install dependencies
     ```
     sudo apt update
-    sudo apt-get install python3-pip python3-pil python3-numpy
+    sudo apt-get install python3-pip python3-pil python3-numpy git
     pip3 install RPi.GPIO spidev
     ```
 
@@ -140,3 +140,8 @@ To make it run on startup you can choose from 2 options:
        ```
         sudo journalctl -f -u btc-screen.service
        ```
+
+### Support the project
+If you would like to support this project and and keep me caffeinated, you can do it here:
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/drmod)
