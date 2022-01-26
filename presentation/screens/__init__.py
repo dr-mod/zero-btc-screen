@@ -1,1 +1,1 @@
-from . import epd2in13v2, epd2in13bv3, picture, inkywhatrbw
+from . import epd2in13v2, epd2in13v3, epd2in13bv3, picture, inkywhatrbw

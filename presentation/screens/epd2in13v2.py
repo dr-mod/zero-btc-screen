@@ -20,19 +20,18 @@ class Epd2in13v2(Observer):
 
     def __init__(self, observable, mode):
         super().__init__(observable=observable)
-        self.epd = epd2in13_V2.EPD()
-        self.screen_image = self._init_display(self.epd)
+        self.epd = self._init_display()
+        self.screen_image = Image.new('1', (SCREEN_WIDTH, SCREEN_HEIGHT), 255)
         self.screen_draw = ImageDraw.Draw(self.screen_image)
         self.mode = mode
 
     @staticmethod
-    def _init_display(epd):
+    def _init_display():
+        epd = epd2in13_V2.EPD()
         epd.init(epd.FULL_UPDATE)
         epd.Clear(0xFF)
-        screen_image = Image.new('1', (SCREEN_WIDTH, SCREEN_HEIGHT), 255)
-        epd.displayPartBaseImage(epd.getbuffer(screen_image))
         epd.init(epd.PART_UPDATE)
-        return screen_image
+        return epd
 
     def form_image(self, prices, screen_draw):
         screen_draw.rectangle((0, 0, SCREEN_WIDTH, SCREEN_HEIGHT), fill="#ffffff")
@@ -57,6 +56,5 @@ class Epd2in13v2(Observer):
         # epd.presentation(epd.getbuffer(screen_image_rotated))
         self.epd.displayPartial(self.epd.getbuffer(screen_image_rotated))
 
-    @staticmethod
-    def close():
+    def close(self):
         epd2in13_V2.epdconfig.module_exit()
