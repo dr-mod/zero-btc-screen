@@ -2,14 +2,18 @@
 
 Bitcoin (or any other currency) stock price for your RPi Zero
 
-![display](display_1.jpeg)
-![display](display_2.jpeg)
+![display](docs/display_1.jpeg)
+![display](docs/display_2.jpeg)
+![display](docs/display_3.jpeg)
 
 ## Hardware
 
 ### Platform
 
-* Raspberry Pi Zero W (or any other RPi)
+* Raspberry Pi Zero W
+* Raspberry Pi 3b+
+* Raspberry Pi 4
+* Any other modern RPi
 
 ### Supported displays
 
@@ -17,6 +21,7 @@ Bitcoin (or any other currency) stock price for your RPi Zero
   * epd2in13v2
   * epd2in13v3
   * epd2in13bv3
+  * epd3in7
 * inkyWhat (Red, Black, White)
 * Virtual (picture)
 
@@ -39,8 +44,6 @@ Bitcoin (or any other currency) stock price for your RPi Zero
     git clone https://github.com/waveshare/e-Paper.git ~/e-Paper
     pip3 install ~/e-Paper/RaspberryPi_JetsonNano/python/
     ```
-   for more information refer to: https://www.waveshare.com/wiki/2.13inch_e-Paper_HAT
-    
     2. If you have an Inky wHAT display
     ```
     pip3 install inky[rpi]
@@ -75,6 +78,7 @@ screens : [
     epd2in13v2
 #    epd2in13v3
 #    epd2in13bv3
+#    epd3in7
     picture
 #    inkyWhatRBW
   ]
@@ -88,7 +92,10 @@ mode : candle
 mode : candle
 
 [epd2in13bv3]
-mode  : line
+mode : line
+
+[epd3in7]
+mode : candle
 
 [picture]
 filename : /home/pi/output.png
