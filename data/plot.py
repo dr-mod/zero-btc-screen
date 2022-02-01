@@ -15,9 +15,8 @@ class Plot:
             plot_data.append((x, y))
         draw.line(plot_data, fill=fill)
 
-    # TODO: Implement variable number of elements to generate
     @staticmethod
-    def y_axis_labels(prices, font, position_first=(0, 0), position_last=(0, 0), draw=None, fill=None):
+    def y_axis_labels(prices, font, position_first=(0, 0), position_last=(0, 0), draw=None, fill=None, labels_number=3):
         def center_x(price):
             area_width = position_last[0] - position_first[0]
             text_width, _ = draw.textsize(price, font)
@@ -28,14 +27,26 @@ class Plot:
 
         max_price = max(prices)
         min_price = min(prices)
-        middle_price = (max_price - min_price) / 2 + min_price
+        price_step = (max_price - min_price) / (labels_number - 1)
+        y_step = (position_last[1] - position_first[1]) / (labels_number - 1)
+        for i in range(0, labels_number):
+            human_price = Plot.human_format(min_price + i * price_step, 5)
+            draw.text((center_x(human_price), position_last[1] - i * y_step), human_price, font=font, fill=fill)
 
-        price = Plot.human_format(max_price, 5)
-        draw.text((center_x(price), position_first[1]), price, font=font, fill=fill)
-        price = Plot.human_format(middle_price, 5)
-        draw.text((center_x(price), (position_last[1] - position_first[1]) / 2 + position_first[1]), price, font=font, fill=fill)
-        price = Plot.human_format(min_price, 5)
-        draw.text((center_x(price), position_last[1]), price, font=font, fill=fill)
+    @staticmethod
+    def percentage(prices, x_middle, y, font, draw, fill=None):
+        open = prices[0][0]
+        close = prices[len(prices) - 1][3]
+        percentage = ((1 - (close / open)) * -1) * 100
+
+        price_text = Plot.human_format(percentage, 4, 0)
+        price_text = price_text + "%"
+        if percentage > 0:
+            price_text = "+" + price_text
+        text_width, _ = draw.textsize(price_text, font)
+        price_position = ((x_middle - (text_width / 2)), y)
+        draw.text(price_position, price_text, font=font, fill=fill)
+        return text_width
 
     @staticmethod
     def caption(price, y, screen_width, font, draw, fill=None, currency_offset=-1, price_offset=60):
@@ -59,7 +70,7 @@ class Plot:
         data_offset = len(data) % num_of_candles
         candle_data = []
         for i in range(data_offset, len(data), windows_per_candle):
-            window = data[i:i + windows_per_candle - 1]
+            window = data[i:i + windows_per_candle]
             open = window[0][0]
             close = window[len(window) - 1][3]
             high = max([i[1] for i in window])
