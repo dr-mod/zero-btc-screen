@@ -5,6 +5,7 @@ Bitcoin (or any other currency) stock price for your RPi Zero
 ![display](docs/display_1.jpeg)
 ![display](docs/display_2.jpeg)
 ![display](docs/display_3.jpeg)
+![display](docs/display_4.jpeg)
 
 ## Hardware
 
@@ -21,6 +22,7 @@ Bitcoin (or any other currency) stock price for your RPi Zero
   * epd2in13v2
   * epd2in13v3
   * epd2in13bv3
+  * epd2in7
   * epd3in7
 * inkyWhat (Red, Black, White)
 * Virtual (picture)
@@ -78,6 +80,7 @@ screens : [
     epd2in13v2
 #    epd2in13v3
 #    epd2in13bv3
+#    epd2in7
 #    epd3in7
     picture
 #    inkyWhatRBW
@@ -93,6 +96,9 @@ mode : candle
 
 [epd2in13bv3]
 mode : line
+
+[epd2in7]
+mode : candle
 
 [epd3in7]
 mode : candle
