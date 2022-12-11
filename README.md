@@ -2,10 +2,7 @@
 
 Bitcoin (or any other currency) stock price for your RPi Zero
 
-![display](docs/display_1.jpeg)
-![display](docs/display_2.jpeg)
-![display](docs/display_3.jpeg)
-![display](docs/display_4.jpeg)
+![display](docs/display.jpg)
 
 ## Hardware
 
