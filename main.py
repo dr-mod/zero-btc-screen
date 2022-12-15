@@ -1,6 +1,8 @@
 import json
 import random
 import time
+import requests
+import urllib.parse
 from datetime import datetime, timezone, timedelta
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
@@ -24,11 +26,11 @@ def fetch_prices():
     timeslot_end = datetime.now(timezone.utc)
     end_date = timeslot_end.strftime(DATETIME_FORMAT)
     start_data = (timeslot_end - timedelta(days=DATA_SLICE_DAYS)).strftime(DATETIME_FORMAT)
-    url = f'https://production.api.coindesk.com/v2/price/values/{config.currency}?ohlc=true&start_date={start_data}&end_date={end_date}'
-    req = Request(url)
-    data = urlopen(req).read()
-    external_data = json.loads(data)
-    prices = [entry[1:] for entry in external_data['data']['entries']]
+    url = f'https://api.exchange.coinbase.com/products/{config.currency}/candles?granularity=900&start={urllib.parse.quote_plus(start_data)}&end={urllib.parse.quote_plus(end_date)}'
+    headers = {"Accept": "application/json"}
+    response = requests.request("GET", url, headers=headers)
+    external_data = json.loads(response.text)
+    prices = [entry[1:5] for entry in external_data[::-1]]
     return prices
 
 

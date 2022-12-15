@@ -70,7 +70,8 @@ console_logs             : false
 #logs_file               : /tmp/zero-btc-screen.log
 dummy_data               : false
 refresh_interval_minutes : 15
-currency                 : BTC
+# Price pair from Coinbase e.g. BTC-EUR or ADA-GBP
+currency                 : BTC-USD
 
 # Enabled screens or devices
 screens : [
