@@ -33,8 +33,8 @@ Bitcoin (or any other currency) stock price for your RPi Zero
 2. Install dependencies
     ```
     sudo apt update
-    sudo apt-get install python3-pip python3-pil python3-numpy git
-    pip3 install RPi.GPIO spidev
+    sudo apt-get install python3-pip python3-numpy git
+    pip3 install RPi.GPIO spidev pillow
     ```
 
 3. Install drivers for your display (you don't need to install both)
